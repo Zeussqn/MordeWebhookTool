@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Webhook Gönder</title>
+    <style>
+        body {font-family: sans-serif; text-align: center; padding: 50px;}
+        input, textarea, button {width: 90%; padding: 15px; margin: 10px; font-size: 18px;}
+        button {background: #5865F2; color: white; border: none; cursor: pointer;}
+    </style>
+</head>
+<body>
+    <h1>Discord Webhook Gönderici</h1>
+    <input type="text" id="url" placeholder="Webhook URL" style="width:90%">
+    <textarea id="mesaj" placeholder="Mesajını yaz" rows="5"></textarea>
+    <button onclick="gonder()">Gönder</button>
+    <p id="sonuc"></p>
+
+<script>
+async function gonder() {
+    let url = document.getElementById("url").value;
+    let mesaj = document.getElementById("mesaj").value;
+    document.getElementById("sonuc").innerHTML = "Gönderiliyor...";
+
+    let proxy = "https://api.allorigins.win/raw?url=" + encodeURIComponent(url);
+
+    await fetch(proxy, {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({content: mesaj})
+    });
+
+    document.getElementById("sonuc").innerHTML = "Gönderildi!";
+}
+</script>
+</body>
+</html>
